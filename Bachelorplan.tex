@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper, landscape]{article}
+\usepackage[applemac]{inputenc}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[german]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\author{Tim Herbstrith}
+\pagestyle{empty}
+
+\usepackage{tikz}
+\usepackage{pgfcore}
+\usetikzlibrary{shapes.multipart}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{setspace}
+\renewcommand{\arraystretch}{1.5}
+
+\newcommand{\firstH}{11}
+\newcommand{\lastH}{19}
+\newcommand{\appointment}[5]{
+\filldraw[black!20, rounded corners] (#1-0.99,\firstH -#2) rectangle (#1-0.01,\firstH -#3);
+\path (#1-1,\firstH -#2) -- (#1,\firstH -#3) node[circle split,midway, font=\scriptsize, text width=3cm, minimum width=1, text centered] {#4 \nodepart{lower} #5};
+}
+
+\begin{document}
+\begin{center}
+
+\begin{tikzpicture}[xscale=4, yscale=1]
+\foreach \hour in {\firstH,...,\lastH}
+	\draw (0,\firstH-\hour) node[left=5] {\hour.00} -- (5,\firstH-\hour)  (0,\firstH+0.5-\hour) -- (5,\firstH+0.5-\hour);
+\foreach \day in {0,...,5}
+	\draw[line width=8pt,white] (\day,0.6) -- (\day,\firstH-\lastH -0.1);
+\foreach \day/\name in {1/Montag,2/Dienstag,3/Mittwoch,4/Donnerstag,5/Freitag}
+	\node at (-0.5+\day,1) {\name};
+	
+\appointment{1}{15.00}{16.50}{Jour Fixe}{01.127}
+\appointment{2}{11.25}{12.83}{Stochastische Analysis}{SR 11}
+\appointment{3}{15.00}{16.50}{Hilfsmittel aus der EDV}{PC 02}
+\appointment{3}{17.25}{18.75}{Workshops/ Fragestunden}{HS 13}
+\appointment{4}{17.25}{18.75}{Workshops/ Fragestunden}{HS 13}
+\appointment{4}{11.25}{12.83}{Stochastische Analysis}{SR 08}
+\end{tikzpicture}
+
+\vspace*{\fill}
+\begin{tabular}{L{25em} C{4em} C{25em} C{2em}}
+\textbf{Vorlesung zu	}		&	\textbf{ECTS}	&	\textbf{Termin}\\
+\hline
+\hline
+Einf\"uhrung in die Analysis	&	5	&	&	\\
+Analysis						&	7	&	&	\\
+H\"ohere Analysis und Differentialgeometrie	&	6	&	7. November 2014		&	\\
+\hline
+Numerische Mathematik		&	3	&	5. Dezember 2014		&	\\
+Diskrete Mathematik			&	3	&		&	\\
+Komplexe Analysis			&	3	&	10. Oktober 2014		&	\checkmark	\\
+\hline
+Funktionalanalysis			&	5	&	\\
+\end{tabular}
+\end{center}
+\end{document}
