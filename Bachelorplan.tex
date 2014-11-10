@@ -21,6 +21,7 @@
 
 \newcommand{\firstH}{11}
 \newcommand{\lastH}{19}
+% Automatically draws Calendar Entries
 \newcommand{\appointment}[5]{
 \filldraw[black!20, rounded corners] (#1-0.99,\firstH -#2) rectangle (#1-0.01,\firstH -#3);
 \path (#1-1,\firstH -#2) -- (#1,\firstH -#3) node[circle split,midway, font=\scriptsize, text width=3cm, minimum width=1, text centered] {#4 \nodepart{lower} #5};
