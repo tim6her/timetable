@@ -238,3 +238,5 @@ sympy-plots-for-*.tex/
 
 # gitignore itself
 #*.gitignore
+
+.DS_Store
