@@ -3,10 +3,12 @@
 % Use metric unitis to specify coordinates (very important)
 % Einzeilige Events, wenn Platz nicht reicht.
 
-\documentclass[10pt,a4paper, landscape]{article}
+\documentclass[10pt,a4paper, landscape, ngerman]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
-\usepackage[english]{babel}
+\usepackage{babel}
+\usepackage{translator}
+
 \usepackage[T1]{fontenc}
 
 
@@ -15,7 +17,7 @@
 
 \usepackage{tikz}
 \usepackage{pgfcore}
-\usetikzlibrary{shapes.multipart}
+\usepackage{pgfcalendar}
 
 
 \usepackage{setspace}
@@ -58,8 +60,8 @@
 	\draw (0,\firstH-\hour) node[left=5] {\hour.00} -- (5,\firstH-\hour)  (0,\firstH+0.5-\hour) -- (5,\firstH+0.5-\hour);
 \foreach \day in {0,...,5}
 	\draw[line width=8pt,white] (\day,0.6) -- (\day,\firstH-\lastH -0.1);
-\foreach \day/\name in {1/Montag,2/Dienstag,3/Mittwoch,4/Donnerstag,5/Freitag}
-	\node at (-0.5+\day,1) {\name};
+\foreach \day in {0,...,4}
+	\node at (0.5+\day,1) {\pgfcalendarweekdayname{\day}};
 	
 \appointment{1}{15.00}{16.50}{Jour Fixe}{01.127}
 \appointment{2}{11.25}{11.30}{Stochastische Analysis}{SR 11}
@@ -68,6 +70,7 @@
 %\appointment{4}{17.25}{18.75}{Fragestunden}{HS 13}
 %\appointment{4}{11.25}{12.83}{Stochastische Analysis}{SR 08}
 
+\draw (0,{time(12.50)}) -- (1cm,{time(13.20)});
 \end{tikzpicture}
 
 \end{center}
