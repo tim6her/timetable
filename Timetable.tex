@@ -1,11 +1,9 @@
-%===================
-% TODOs:
-% Einzeilige Events, wenn Platz nicht reicht.
-
-\documentclass[10pt,a4paper, landscape, ngerman]{article}
+\documentclass[10pt,a4paper, landscape, english]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage{babel}
+
+% Will change name of weekdays
 \usepackage{translator}
 
 \usepackage[T1]{fontenc}
@@ -17,7 +15,6 @@
 \usepackage{tikz}
 \usepackage{pgfcore}
 \usepackage{pgfcalendar}
-\usepackage{ifthen}
 
 
 \usepackage{setspace}
@@ -27,32 +24,21 @@
 \newcommand{\lengthofhour}{1}
 \newcommand{\entrytextwidth}{3.5}
 
-\newcommand{\firstH}{11}
-\newcommand{\lastH}{19}
+\newcommand{\firstH}{8}
+\newcommand{\lastH}{18}
+
+\tikzstyle{sem}=[fill=black!80, text=white]
 
 
 % Macro for drawing calendar entries
-\newcommand{\calentry}[5]{
-	\filldraw[black!20, rounded corners] ({day(#1,-1)},{time(#2)}) rectangle ({day(#1,1)},{time(#3)});%
-	\node[anchor=north, font=\scriptsize, text width=\entrytextwidth cm] at ({day(#1,0)},{time(#2)}) {#2\\ \textbf{#4}\\ #5};%
+\newcommand{\calentry}[6][]{
+	\filldraw[black!20, rounded corners, #1] ({day(#2,-1)},{time(#3)}) rectangle ({day(#2,1)},{time(#4)});%
+	\node[anchor=north, font=\scriptsize, text width=\entrytextwidth cm, #1] at ({day(#2,0)},{time(#3)}) {#3\\ \textbf{#5}\\ #6};%
 }
-\newcommand{\shortcalentry}[4]{
-	\filldraw[black!20, rounded corners] ({day(#1,-1)},{time(#2)}) rectangle ({day(#1,1)},{time(#3)});%
-	\node[font=\scriptsize, text width=\entrytextwidth cm] at ({day(#1,0)},{halftime(#2,#3)}) {\textbf{#4}};%
+\newcommand{\shortcalentry}[5][]{
+	\filldraw[black!20, rounded corners, #1] ({day(#2,-1)},{time(#3)}) rectangle ({day(#2,1)},{time(#4)});%
+	\node[font=\scriptsize, text width=\entrytextwidth cm, #1] at ({day(#2,0)},{halftime(#3,#4)}) {\textbf{#5}};%
 }
-%\newcommand{\entry}[5]{%
-%	\ifthenelse{\equal{\isshort{#2}{#3}}{0.0}}{%
-%		\calentry{#1}{#2}{#3}{#4}{#5}%
-%	}{%
-%		\shortcalentry{#1}{#2}{#3}{#4}%
-%	}%
-%}
-
-%% Determine, whether event is too short to print whole information.
-%\newcommand{\isshort}[2]{%
-%	\pgfmathlessthan{#2-#1}{0.75}
-%	\pgfmathresult
-%}
 
 \begin{document}
 \begin{center}
@@ -83,12 +69,21 @@
 \foreach \day in {0,...,4}
 	\node at (0.5+\day,1) {\pgfcalendarweekdayname{\day}};
 	
-\calentry{1}{15.00}{16.50}{Jour Fixe}{01.127}
-\calentry{2}{11.15}{12.50}{Stochastische Analysis}{SR 11}
-\calentry{3}{15.00}{16.30}{Hilfsmittel aus der EDV}{PC 02}
-\calentry{3}{17.15}{18.45}{Fragestunden}{HS 13}
-\calentry{4}{17.15}{18.45}{Fragestunden}{HS 13}
-\calentry{4}{11.15}{12.50}{Stochastische Analysis}{SR 08}
+\calentry{1}{09.15}{10.45}{Linear Algebra and Geometry 2}{LH 2}
+\calentry{1}{11.00}{12.30}{Algebraic Structures}{LH 2}
+\calentry{1}{15.00}{16.30}{Calculus}{C207}
+
+\calentry[sem]{2}{08.00}{9.30}{Seminar on Calculus}{LH 1}
+\shortcalentry[sem]{2}{12.05}{12.50}{Seminar on LinAG}{LH 1}
+\shortcalentry[sem]{2}{14.00}{14.45}{Seminar on Algebraic Structures}{C209}
+
+\shortcalentry[sem]{3}{09.00}{09.45}{Seminar on Discrete Mathematics}{C209}
+
+\calentry{4}{16.00}{17.30}{Calculus}{LH 3}
+
+\calentry{5}{10.00}{11.30}{Discrete Mathematics}{LH 3}
+\calentry[sem]{5}{13.00}{17.00}{Bachelor Seminar 1}{2A310}
+
 
 \end{tikzpicture}
 
