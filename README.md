@@ -2,6 +2,8 @@
 
 This a *LaTeX* template implementing a simple schedule.
 
+![Example](imgs/Timetable.png)
+
 ## Usage
 
 Just add your calendar entries in the `timetable` environment
