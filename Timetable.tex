@@ -23,7 +23,7 @@
 
 % Set the first and last hour of the day (24h day format)
 \newcommand{\firstH}{8}
-\newcommand{\lastH}{18}
+\newcommand{\lastH}{20}
 
 % TikZ style to display different subcalendars
 \tikzstyle{sem}=[fill=black!80, text=white]
@@ -44,13 +44,9 @@
 		at ({day(#2,0)},{halftime(#3,#4)}) {\textbf{#5}};%
 }
 
-\begin{document}
-\begin{center}
-
-\begin{tikzpicture}[x=\widthofday cm, y=\lengthofhour cm]
 
 % Offset for the rectangle marking appointments
-\pgfmathsetmacro{\offsetForAppointment}{+0.01}
+\pgfmathsetmacro{\offsetForAppointment}{+0.01pt}
 
 % Converts the integer marking the day of the week to a coordinate.
 % The second argument specifies wheter the left (-1), the base (0) or the right
@@ -68,17 +64,35 @@
 \pgfmathdeclarefunction{halftime}{2}{%
 	\pgfmathparse{(time(#1)+time(#2))/2}%
 }
-	
+
+\usepackage{environ}
+\NewEnviron{timetable}%
+		[2]%
+		{%
+\renewcommand{\firstH}{#1}
+\renewcommand{\lastH}{#2}
+%
+\begin{tikzpicture}[x=\widthofday cm, y=\lengthofhour cm]
+
 % Draws the timtables grid
 \foreach \hour in {\firstH,...,\lastH}
-	\draw (0,\firstH-\hour) node[left=5] {\hour.00} -- (5,\firstH-\hour) 
-		 (0,\firstH+0.5-\hour) -- (5,\firstH+0.5-\hour);
+        \draw (0,\firstH-\hour) node[left=5] {\hour.00} -- (5,\firstH-\hour)
+                 (0,\firstH+0.5-\hour) -- (5,\firstH+0.5-\hour);
 \foreach \day in {0,...,5}
-	\draw[line width=8pt,white] (\day,0.6) -- (\day,\firstH-\lastH -0.1);
-	
+        \draw[line width=8pt,white] (\day,0.6) -- (\day,\firstH-\lastH -0.1);
+
 % Prints days of the week, first day of the week (1) is Monday!
 \foreach \day in {0,...,4}
-	\node at (0.5+\day,1) {\pgfcalendarweekdayname{\day}};
+        \node at (0.5+\day,1) {\pgfcalendarweekdayname{\day}};
+
+{\BODY}
+
+\end{tikzpicture}
+		}%
+
+\begin{document}
+\begin{center}
+\begin{timetable}{8}{19}
 
 % Here are the actual entries of our timetable
 \calentry{1}{09.15}{10.45}{Linear Algebra and Geometry 2}{LH 2}
@@ -95,9 +109,7 @@
 
 \calentry{5}{10.00}{11.30}{Discrete Mathematics}{LH 3}
 \calentry[sem]{5}{13.00}{17.00}{Bachelor Seminar 1}{2A310}
-
-
-\end{tikzpicture}
+\end{timetable}
 
 \end{center}
 \end{document}
